@@ -256,6 +256,32 @@ app.post('/api/ridinfo', async (req, res) => {
   }
 });
 
+app.post('/api/resend', async (req, res) => {
+  const requestBody = req.body;
+
+  try {
+    const response = await axios.post('http://172.18.7.230:8006/resendSms', requestBody, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const data = response.data;
+
+    if (data.status === "200") {
+      console.log(data);
+      res.status(200).json({ message: 'SMS sent successfully' });
+    } else {
+      console.log(data);
+      res.status(400).json({ error: data.error });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 // Error logging
 app.use(
   expressWinston.errorLogger({
