@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { logger } = require('../middleware/logger');
+const { log } = require('winston');
 
 exports.fetchData = async (req, res) => {
     const { beginDate, endDate, operationType } = req.body;
@@ -227,5 +228,31 @@ exports.updateDemoData = async (req, res) => {
     res.status(500).json({ error: "An error occurred while updating data" });
   }
 };
+
+exports.transactionHistory = async (req, res) => {
+  const requestBody = req.body;
+  logger.info("Calling Transaction History")
+  try{
+    const response = await axios.post("http://localhost:8080/api/getTransaction", requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = response.data;
+    logger.info(data)
+    if (response.status === 200) {
+      res.status(200).send(data); // Sending text response
+    } else {
+      res.status(response.status).json({ error: data.error }); // Assuming data contains an error message
+    }
+
+  }
+  catch (error){
+    logger.error("Error calling transaction history API", error);
+    res.status(500).json({ error: 'Internal server error' });
+
+  }
+}
 
 
