@@ -5,6 +5,8 @@ const { loggerMiddleware, errorLoggerMiddleware, logger } = require('./middlewar
 const apiRoutes = require('./routes/apiRoute');
 const authRoutes = require('./routes/authRoute');
 
+require('dotenv').config();
+
 const app = express();
 
 app.use(express.json());
@@ -18,7 +20,7 @@ app.use('/api', authRoutes);
 
 app.use(errorLoggerMiddleware);
 
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3003;
 app.listen(port, () => {
   logger.info(`Server is running on port ${port}`);
 });

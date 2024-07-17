@@ -155,3 +155,77 @@ exports.search = async (req, res) => {
       return res.status(500).json({ error: "Internal Server Error" });
     }
   };
+
+
+exports.matchReg = async (req, res) => {
+  const requestBody = req.body;
+
+  try {
+    const response = await axios.post(`http://localhost:8080/api/matchreg`, requestBody, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = response.data;
+
+    if (response.status === 200) {
+      res.status(200).json(data);
+    } else {
+      res.status(response.status).json({ error: data.error });
+    }
+  } catch (error) {
+    logger.error("Error fetching matchReg data:", error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+exports.getDemoData = async (req, res) => {
+  const requestBody = req.body;
+
+  try {
+    const response = await axios.post("http://localhost:8080/api/getdemodata", requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = response.data;
+
+    if (response.status === 200) {
+      logger.info("Data Fetched Successfully");
+      res.status(200).json(data);
+    } else {
+      logger.error("Error:", data.error);
+      res.status(response.status).json({ error: data.error });
+    }
+  } catch (error) {
+    logger.error("Fetch Error:", error.message);
+    res.status(500).json({ error: "An error occurred while fetching data" });
+  }
+};
+
+exports.updateDemoData = async (req, res) => {
+  const requestBody = req.body;
+
+  try {
+    const response = await axios.post("http://localhost:8080/api/updatedemodata", requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.text(); // Assuming response is text/plain
+
+    if (response.status === 200) {
+      res.status(200).send(data); // Sending text response
+    } else {
+      res.status(response.status).json({ error: data.error }); // Assuming data contains an error message
+    }
+  } catch (error) {
+    console.error("Fetch Error:", error);
+    res.status(500).json({ error: "An error occurred while updating data" });
+  }
+};
+
+
