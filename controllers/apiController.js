@@ -162,7 +162,7 @@ exports.matchReg = async (req, res) => {
   const requestBody = req.body;
 
   try {
-    const response = await axios.post(`http://localhost:8080/api/matchreg`, requestBody, {
+    const response = await axios.post(`${process.env.FAYDA_SERVICES_API_URL}/api/matchreg`, requestBody, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -185,7 +185,7 @@ exports.getDemoData = async (req, res) => {
   const requestBody = req.body;
 
   try {
-    const response = await axios.post("http://localhost:8080/api/getdemodata", requestBody, {
+    const response = await axios.post(`${process.env.FAYDA_SERVICES_API_URL}/api/getdemodata`, requestBody, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -210,7 +210,7 @@ exports.updateDemoData = async (req, res) => {
   const requestBody = req.body;
 
   try {
-    const response = await axios.post("http://localhost:8080/api/updatedemodata", requestBody, {
+    const response = await axios.post(`${process.env.FAYDA_SERVICES_API_URL}/api/updatedemodata` , requestBody, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -233,7 +233,7 @@ exports.transactionHistory = async (req, res) => {
   const requestBody = req.body;
   logger.info("Calling Transaction History")
   try{
-    const response = await axios.post("http://localhost:8080/api/getTransaction", requestBody, {
+    const response = await axios.post(`${process.env.FAYDA_SERVICES_API_URL}/api/getTransaction`, requestBody, {
       headers: {
         "Content-Type": "application/json",
       },

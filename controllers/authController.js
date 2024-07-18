@@ -24,7 +24,7 @@ exports.authenticate = async (req, res) => {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        timeout: 10000, // 10 seconds timeout
+       // 10 seconds timeout
       }
     );
 
@@ -43,7 +43,7 @@ exports.authenticate = async (req, res) => {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-        timeout: 10000, // 10 seconds timeout
+        
       }
     );
 
