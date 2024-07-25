@@ -1,4 +1,3 @@
-
 const axios = require('axios');
 const jwt = require('jsonwebtoken');
 const { logger } = require('../middleware/logger');
@@ -43,7 +42,7 @@ exports.authenticate = async (req, res) => {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-        
+
       }
     );
 

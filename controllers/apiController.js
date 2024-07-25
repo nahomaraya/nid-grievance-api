@@ -88,6 +88,31 @@ exports.ridInfo = async (req, res) => {
     }
   };
 
+exports.reproccess = async (req, res) => {
+    const requestBody = req.body;
+  
+    try {
+      const response = await axios.post(`${process.env.API_BASE_URL}/reprocessPacket`, requestBody, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      const data = response.data;
+  
+      if (data.status === "SUCCESS") {
+        logger.info(data);
+        res.status(200).json({ message: 'RID Reproccessed Successfully' });
+      } else {
+        logger.info(data);
+        res.status(400).json({ error: data.error });
+      }
+    } catch (error) {
+      logger.error("Error reprocessing RID:", error.message);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 exports.resend = async (req, res) => {
     const requestBody = req.body;
   
@@ -216,8 +241,7 @@ exports.updateDemoData = async (req, res) => {
       },
     });
 
-    const data = await response.text(); // Assuming response is text/plain
-
+    const data = response.data;
     if (response.status === 200) {
       res.status(200).send(data); // Sending text response
     } else {
